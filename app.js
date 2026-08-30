@@ -44,4 +44,6 @@ faqItems.forEach((item) => {
   });
 });
 
-generateKeys()
+(async () => {
+  await generateKeys();
+})()
