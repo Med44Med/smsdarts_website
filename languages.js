@@ -27,8 +27,6 @@ langBtn.addEventListener("click", () => {
   function setCookie(name, value) {
     const isLocalhost =
       location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    console.log(isLocalhost);
-
     document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=${isLocalhost ? "Lax" : "None"}; ${isLocalhost ? "" : "Secure"};`;
   }
 
