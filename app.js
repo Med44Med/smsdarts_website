@@ -44,4 +44,4 @@ faqItems.forEach((item) => {
   });
 });
 
-window.generateKeys()
+generateKeys()

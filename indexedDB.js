@@ -10,7 +10,7 @@ const initiateDB = () => {
   return request;
 };
 
-window.generateKeys = async () => {
+const generateKeys = async () => {
   const keyPair = await window.crypto.subtle.generateKey(
     {
       name: "RSA-OAEP",
