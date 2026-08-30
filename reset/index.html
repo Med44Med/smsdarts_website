@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr" theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/images/smsdarts.png" />
+    <title>SMSDarts | Login</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style type="text/tailwindcss">
+      @theme {
+        --color-primary: #3cc037;
+        --color-primary-hover: oklch(62.7% 0.194 149.214);
+        --color-text: var(--text);
+        --color-text-secondary: var(--text-secondary);
+        --color-background: var(--background);
+        --color-surface: var(--surface);
+        --color-surface-secondary: var(--surface-secondary);
+        --font-montserrat: "Montserrat", sans-serif;
+        --font-playfair: "Playfair Display", serif;
+      }
+
+      :root {
+        --background: #1d1d1d;
+        --surface: #242424;
+        --surface-secondary: #2d2d2d;
+        --primary: #3cc037;
+        --primary-hover: oklch(62.7% 0.194 149.214);
+
+        --text: #e9e9e9;
+        --text-secondary: #a1a1a1;
+      }
+
+      html[theme="light"] {
+        --background: #dee4df;
+        --surface: #f7f6f6;
+        --surface-secondary: #ffffff;
+
+        --text: #242424;
+        --text-secondary: #5c5c5c;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body
+    class="bg-background flex flex-col items-center justify-start h-screen p-10"
+  >
+    <div class="w-full flex justify-start items-start">
+      <a href="javascript:history.back()"
+        ><i
+          class="fa-solid fa-arrow-left text-text text-2xl hover:text-primary"
+        ></i
+      ></a>
+    </div>
+    <div class="flex justify-center items-center gap-2">
+      <img src="../images/smsdarts.png" alt="" class="w-16 h-auto" />
+      <h1 class="text-text text-2xl font-black text-center">
+        SMS<span class="text-primary">Darts</span>
+      </h1>
+    </div>
+    <div class="flex justify-center items-center gap-2 my-5">
+      <h1 class="text-text text-2xl font-black text-center">Reset Password Page</h1>
+    </div>
+    <form
+      class="bg-surface w-full max-w-3xl p-8 rounded-2xl shadow-lg flex flex-col items-center gap-4"
+    >
+      
+      
+      <div class="w-full md:w-2/3 flex flex-col items-end">
+        <label for="password" class="w-full block text-sm font-medium text-text"
+          >Nouveau mot de passe</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          class="text-text mt-1 block w-full px-3 py-2 bg-surface-secondary border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+        />
+      </div>
+      <div class="w-full md:w-2/3 flex flex-col items-end">
+        <label for="password" class="w-full block text-sm font-medium text-text"
+          >Confirmer le nouveau mot de passe</label
+        >
+        <input
+          type="password"
+          id="confirm-password"
+          name="confirm-password"
+          required
+          class="text-text mt-1 block w-full px-3 py-2 bg-surface-secondary border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+        />
+      </div>
+      <div class="w-2/3 mt-auto flex flex-col items-center gap-3">
+        <p class="text-red-500 text-sm">
+          
+        </p>
+        <button
+          type="submit"
+          class="w-full cursor-pointer py-2 px-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
+          Réinitialiser le mot de passe
+        </button> 
+      </div>
+    </form>
+    <div class="py-10">
+      <p class="text-text font-bold">SMSDarts - 2026</p>
+    </div>
+  </body>
+</html>

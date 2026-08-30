@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    transition: all .3s ease-in-out;
+    scrollbar-width: thin;
+    scrollbar-color: oklch(72.3% 0.219 149.579) #1d1d1d;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 600,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(100px); 
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.element-to-animate {
+  opacity: 0; 
+  animation: appear linear 1s forwards; 
+  animation-timeline:view(); 
+  animation-range: entry 0% cover 50%; 
+}

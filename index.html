@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en" theme="dark" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <style type="text/tailwindcss">
+      @theme {
+        --color-primary: #3cc037;
+        --color-primary-hover: oklch(62.7% 0.194 149.214);
+        --color-text: var(--text);
+        --color-text-secondary: var(--text-secondary);
+        --color-background: var(--background);
+        --color-surface: var(--surface);
+        --color-surface-secondary: var(--surface-secondary);
+        --font-montserrat: "Montserrat", sans-serif;
+        --font-playfair: "Playfair Display", serif;
+      }
+      :root {
+        --background: #1d1d1d;
+        --surface: #242424;
+        --surface-secondary: #2d2d2d;
+        --primary: #3cc037;
+        --primary-hover: oklch(62.7% 0.194 149.214);
+
+        --text: #e9e9e9;
+        --text-secondary: #a1a1a1;
+      }
+
+      html[theme="light"] {
+        --background: #dee4df;
+        --surface: #f7f6f6;
+        --surface-secondary: #ffffff;
+
+        --text: #242424;
+        --text-secondary: #5c5c5c;
+      }
+      * {
+        font-family: "Montserrat", sans-serif;
+      }
+    </style>
+    <title>SMSDarts</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="./supabase.js"></script>
+    <script async src="./indexedDB.js"></script>
+  </head>
+  <body
+    class="relative bg-background min-h-dvh overflow-x-hidden flex flex-col justify-start items-center"
+  >
+    <header
+      class="fixed z-50 top-0 left-0 right-0 w-full h-16 md:h-16 py-2 bg-background shadow-lg px-5 md:px-10 flex justify-between items-center"
+    >
+      <a href="/" class="flex justify-center items-start gap-1">
+        <img src="../images/smsdarts.png" alt="" class="w-8 md:w-12 h-auto" />
+        <h1
+          class="text-text font-black text-xl md:text-3xl tracking-tighter text-balance"
+        >
+          SMS<span class="text-primary">Darts</span>
+        </h1></a
+      >
+      <nav class="hidden md:flex justify-between items-center">
+        <ul class="flex gap-5">
+          <li>
+            <a
+              href="#pricing"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Tarification</a
+            >
+          </li>
+          <li>
+            <a
+              href="blog"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Contact</a
+            >
+          </li>
+          <li>
+            <a
+              id="get_started_btn"
+              href="login"
+              class="text-white font-bold bg-primary hover:bg-primary-hover px-3 py-2 rounded transition duration-300"
+              >Commencer</a
+            >
+          </li>
+        </ul>
+        <div class="relative hidden md:flex ml-5 items-center gap-0">
+          <div id="langBtn" class="cursor-pointer flex items-center gap-1">
+            <h1 class="text-text font-semibold text-base">FR</h1>
+            <i class="fa-solid fa-caret-down text-text text-sm"></i>
+          </div>
+          <ul
+            id="langMenu"
+            class="hidden absolute right-0 top-full bg-surface p-2 rounded-md shadow"
+          >
+            <li
+              onclick="setLanguage('ar')"
+              class="text-text text-center font-bold text-base hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10 cursor-pointer"
+            >
+              العربية
+            </li>
+            <li
+              onclick="setLanguage('en')"
+              class="text-text text-center font-semibold text-base hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10 cursor-pointer"
+            >
+              English
+            </li>
+            <li
+              onclick="setLanguage('fr')"
+              class="text-primary text-center font-semibold text-base transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10 cursor-pointer"
+            >
+              Francais
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <button id="menuIcon" class="md:hidden" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars text-text text-xl"></i>
+      </button>
+      <div
+        id="responsiveMenu"
+        class="md:hidden z-50 translate-x-full fixed top-14 left-0 right-0 w-full h-dvh bg-background"
+      >
+        <ul
+          class="h-full w-full flex flex-col items-center justify-start gap-5"
+        >
+          <li class="py-3">
+            <a
+              onclick="toggleMenu()"
+              href="#pricing"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Tarification</a
+            >
+          </li>
+          <li class="py-3">
+            <a
+              href="blog"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Blog</a
+            >
+          </li>
+          <li class="py-3">
+            <a
+              href="contact"
+              class="text-text font-semibold hover:text-primary-hover transition duration-300 px-5 py-2 rounded hover:bg-primary-hover/10"
+              >Contact</a
+            >
+          </li>
+          <li class="mt-auto mb-18 w-full px-10 flex justify-center">
+            <a
+              id="get_started_btn"
+              href="login"
+              class="w-full mx-auto text-center text-white font-bold bg-primary hover:bg-primary-hover px-3 py-2 rounded transition duration-300"
+              >Commencer</a
+            >
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main
+      class="w-full flex flex-col justify-start items-center overflow-x-hidden"
+    >
+      <section
+        class="bg-surface w-full h-dvh pt-14 flex flex-col-reverse md:flex-row justify-center items-center"
+      >
+        <div
+          class="flex-1 w-full flex flex-col justify-center items-start gap-1 px-5 md:px-10"
+        >
+          <h1
+            class="element-to-animate md:mt-2 text-xl md:text-3xl xl:text-5xl font-black tracking-tight text-balance text-text"
+          >
+            Transformez votre téléphone Android en passerelle SMS.
+          </h1>
+          <p
+            class="w-full my-2 max-w-2xl text-base md:text-lg xl:text-xl font-medium text-text-secondary sm:text-lg"
+          >
+            Économisez de l'argent en utilisant votre téléphone pour envoyer et
+            recevoir des SMS via une API programmable simple avec chiffrement de
+            bout en bout.
+          </p>
+          <a
+            id="get_started_btn"
+            href="login"
+            class="w-full text-center text-xl md:w-auto mb-5 mt-auto md:mt-3 text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+            >Commencer</a
+          >
+        </div>
+        <div
+          class="flex-1 w-4/5 md:w-full h-4/5 mx-10 rounded-2xl flex justify-center items-center"
+        >
+          <svg
+            class="w-full h-full"
+            viewBox="0 0 1000 874"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="345"
+              y="22"
+              width="310"
+              height="210"
+              rx="8"
+              class="stroke-text-secondary stroke-10"
+              id="svg-screen-1"
+              class="transition duration-300"
+            />
+            <rect
+              x="427.5"
+              y="242.5"
+              width="144"
+              height="22"
+              rx="4.5"
+              class="fill-text-secondary"
+            />
+            <path
+              d="M460.819 115.768C458.003 115.768 455.283 115.448 452.659 114.808C450.035 114.168 447.875 113.336 446.179 112.312L449.827 104.056C451.427 104.984 453.203 105.736 455.155 106.312C457.139 106.856 459.059 107.128 460.915 107.128C462.003 107.128 462.851 107.064 463.459 106.936C464.099 106.776 464.563 106.568 464.851 106.312C465.139 106.024 465.283 105.688 465.283 105.304C465.283 104.696 464.947 104.216 464.275 103.864C463.603 103.512 462.707 103.224 461.587 103C460.499 102.744 459.299 102.488 457.987 102.232C456.675 101.944 455.347 101.576 454.003 101.128C452.691 100.68 451.475 100.088 450.355 99.352C449.267 98.616 448.387 97.656 447.715 96.472C447.043 95.256 446.707 93.752 446.707 91.96C446.707 89.88 447.283 87.992 448.435 86.296C449.619 84.568 451.363 83.192 453.667 82.168C456.003 81.144 458.899 80.632 462.355 80.632C464.627 80.632 466.867 80.872 469.075 81.352C471.283 81.832 473.267 82.568 475.027 83.56L471.619 91.768C469.955 90.936 468.339 90.312 466.771 89.896C465.235 89.48 463.731 89.272 462.259 89.272C461.171 89.272 460.307 89.368 459.667 89.56C459.027 89.752 458.563 90.008 458.275 90.328C458.019 90.648 457.891 91 457.891 91.384C457.891 91.96 458.227 92.424 458.899 92.776C459.571 93.096 460.451 93.368 461.539 93.592C462.659 93.816 463.875 94.056 465.187 94.312C466.531 94.568 467.859 94.92 469.171 95.368C470.483 95.816 471.683 96.408 472.771 97.144C473.891 97.88 474.787 98.84 475.459 100.024C476.131 101.208 476.467 102.68 476.467 104.44C476.467 106.488 475.875 108.376 474.691 110.104C473.539 111.8 471.811 113.176 469.507 114.232C467.203 115.256 464.307 115.768 460.819 115.768ZM479.838 115V81.4H489.15L502.59 103.336H497.694L510.75 81.4H520.062L520.158 115H509.838L509.742 96.952H511.374L502.446 111.976H497.454L488.142 96.952H490.158V115H479.838ZM538.162 115.768C535.346 115.768 532.626 115.448 530.002 114.808C527.378 114.168 525.218 113.336 523.522 112.312L527.17 104.056C528.77 104.984 530.546 105.736 532.498 106.312C534.482 106.856 536.402 107.128 538.258 107.128C539.346 107.128 540.194 107.064 540.802 106.936C541.442 106.776 541.906 106.568 542.194 106.312C542.482 106.024 542.626 105.688 542.626 105.304C542.626 104.696 542.29 104.216 541.618 103.864C540.946 103.512 540.05 103.224 538.93 103C537.842 102.744 536.642 102.488 535.33 102.232C534.018 101.944 532.69 101.576 531.346 101.128C530.034 100.68 528.818 100.088 527.698 99.352C526.61 98.616 525.73 97.656 525.058 96.472C524.386 95.256 524.05 93.752 524.05 91.96C524.05 89.88 524.626 87.992 525.778 86.296C526.962 84.568 528.706 83.192 531.01 82.168C533.346 81.144 536.242 80.632 539.698 80.632C541.97 80.632 544.21 80.872 546.418 81.352C548.626 81.832 550.61 82.568 552.37 83.56L548.962 91.768C547.298 90.936 545.682 90.312 544.114 89.896C542.578 89.48 541.074 89.272 539.602 89.272C538.514 89.272 537.65 89.368 537.01 89.56C536.37 89.752 535.906 90.008 535.618 90.328C535.362 90.648 535.234 91 535.234 91.384C535.234 91.96 535.57 92.424 536.242 92.776C536.914 93.096 537.794 93.368 538.882 93.592C540.002 93.816 541.218 94.056 542.53 94.312C543.874 94.568 545.202 94.92 546.514 95.368C547.826 95.816 549.026 96.408 550.114 97.144C551.234 97.88 552.13 98.84 552.802 100.024C553.474 101.208 553.81 102.68 553.81 104.44C553.81 106.488 553.218 108.376 552.034 110.104C550.882 111.8 549.154 113.176 546.85 114.232C544.546 115.256 541.65 115.768 538.162 115.768ZM431.674 174V140.4H448.234C451.978 140.4 455.274 141.088 458.122 142.464C460.97 143.808 463.194 145.728 464.794 148.224C466.394 150.72 467.194 153.696 467.194 157.152C467.194 160.64 466.394 163.648 464.794 166.176C463.194 168.672 460.97 170.608 458.122 171.984C455.274 173.328 451.978 174 448.234 174H431.674ZM443.002 165.168H447.754C449.354 165.168 450.746 164.864 451.93 164.256C453.146 163.648 454.09 162.752 454.762 161.568C455.434 160.352 455.77 158.88 455.77 157.152C455.77 155.456 455.434 154.016 454.762 152.832C454.09 151.648 453.146 150.752 451.93 150.144C450.746 149.536 449.354 149.232 447.754 149.232H443.002V165.168ZM486.882 174V169.344L486.114 168.096V159.264C486.114 157.984 485.714 157.008 484.914 156.336C484.146 155.664 482.882 155.328 481.122 155.328C479.938 155.328 478.738 155.52 477.522 155.904C476.306 156.256 475.266 156.752 474.402 157.392L470.946 150.24C472.482 149.28 474.322 148.544 476.466 148.032C478.61 147.52 480.706 147.264 482.754 147.264C487.266 147.264 490.754 148.272 493.218 150.288C495.714 152.304 496.962 155.504 496.962 159.888V174H486.882ZM479.442 174.48C477.298 174.48 475.506 174.112 474.066 173.376C472.626 172.64 471.538 171.664 470.802 170.448C470.066 169.2 469.698 167.824 469.698 166.32C469.698 164.624 470.13 163.184 470.994 162C471.858 160.816 473.17 159.92 474.93 159.312C476.722 158.704 478.978 158.4 481.698 158.4H487.17V163.632H483.426C482.274 163.632 481.426 163.824 480.882 164.208C480.37 164.56 480.114 165.104 480.114 165.84C480.114 166.448 480.338 166.96 480.786 167.376C481.266 167.76 481.906 167.952 482.706 167.952C483.442 167.952 484.114 167.76 484.722 167.376C485.362 166.96 485.826 166.32 486.114 165.456L487.506 168.672C487.09 170.624 486.21 172.08 484.866 173.04C483.522 174 481.714 174.48 479.442 174.48ZM501.65 174V147.744H511.97V155.664L510.29 153.408C511.09 151.36 512.37 149.824 514.13 148.8C515.89 147.776 518.002 147.264 520.466 147.264V156.864C519.986 156.8 519.554 156.752 519.17 156.72C518.818 156.688 518.45 156.672 518.066 156.672C516.434 156.672 515.09 157.104 514.034 157.968C513.01 158.8 512.498 160.256 512.498 162.336V174H501.65ZM536.916 174.48C533.3 174.48 530.484 173.616 528.468 171.888C526.452 170.128 525.444 167.44 525.444 163.824V141.84H536.292V163.728C536.292 164.528 536.5 165.152 536.916 165.6C537.364 166.048 537.908 166.272 538.548 166.272C539.476 166.272 540.292 166.032 540.996 165.552L543.588 173.088C542.756 173.568 541.748 173.92 540.564 174.144C539.412 174.368 538.196 174.48 536.916 174.48ZM521.844 157.104V149.184H541.668V157.104H521.844ZM556.594 174.48C554.354 174.48 552.146 174.24 549.97 173.76C547.794 173.28 546.034 172.656 544.69 171.888L547.666 164.736C548.914 165.472 550.354 166.048 551.986 166.464C553.65 166.88 555.266 167.088 556.834 167.088C558.146 167.088 559.026 166.976 559.474 166.752C559.954 166.528 560.194 166.224 560.194 165.84C560.194 165.456 559.922 165.184 559.378 165.024C558.834 164.832 558.114 164.688 557.218 164.592C556.322 164.496 555.33 164.384 554.242 164.256C553.186 164.096 552.114 163.872 551.026 163.584C549.938 163.296 548.946 162.864 548.05 162.288C547.154 161.712 546.434 160.944 545.89 159.984C545.346 158.992 545.074 157.744 545.074 156.24C545.074 154.576 545.57 153.072 546.562 151.728C547.586 150.384 549.09 149.312 551.074 148.512C553.09 147.68 555.57 147.264 558.514 147.264C560.434 147.264 562.354 147.44 564.274 147.792C566.194 148.144 567.842 148.688 569.218 149.424L566.242 156.576C564.898 155.84 563.57 155.344 562.258 155.088C560.978 154.8 559.778 154.656 558.658 154.656C557.282 154.656 556.338 154.784 555.826 155.04C555.346 155.296 555.106 155.584 555.106 155.904C555.106 156.288 555.378 156.576 555.922 156.768C556.466 156.96 557.186 157.104 558.082 157.2C558.978 157.296 559.954 157.424 561.01 157.584C562.098 157.712 563.17 157.936 564.226 158.256C565.314 158.544 566.306 158.976 567.202 159.552C568.098 160.128 568.818 160.912 569.362 161.904C569.906 162.864 570.178 164.096 570.178 165.6C570.178 167.168 569.682 168.64 568.69 170.016C567.698 171.36 566.194 172.448 564.178 173.28C562.162 174.08 559.634 174.48 556.594 174.48Z"
+              class="fill-text"
+            />
+            <rect
+              x="400"
+              y="338"
+              width="200"
+              height="100"
+              rx="10"
+              class="stroke-text-secondary fill-text-secondary/40 stroke-10"
+            />
+            <path
+              d="M488 316C488 314.343 489.343 313 491 313H510C511.657 313 513 314.343 513 316V338H488V316Z"
+              class="fill-text-secondary"
+            />
+            <path
+              d="M491 438H508V456C508 457.657 506.657 459 505 459H494C492.343 459 491 457.657 491 456V438Z"
+              class="fill-text-secondary"
+            />
+            <path
+              d="M430 438H447V456C447 457.657 445.657 459 444 459H433C431.343 459 430 457.657 430 456V438Z"
+              class="fill-text-secondary"
+            />
+            <path
+              d="M552 438H569V456C569 457.657 567.657 459 566 459H555C553.343 459 552 457.657 552 456V438Z"
+              class="fill-text-secondary"
+            />
+            <path
+              d="M434.684 401.576C432.572 401.576 430.532 401.336 428.564 400.856C426.596 400.376 424.976 399.752 423.704 398.984L426.44 392.792C427.64 393.488 428.972 394.052 430.436 394.484C431.924 394.892 433.364 395.096 434.756 395.096C435.572 395.096 436.208 395.048 436.664 394.952C437.144 394.832 437.492 394.676 437.708 394.484C437.924 394.268 438.032 394.016 438.032 393.728C438.032 393.272 437.78 392.912 437.276 392.648C436.772 392.384 436.1 392.168 435.26 392C434.444 391.808 433.544 391.616 432.56 391.424C431.576 391.208 430.58 390.932 429.572 390.596C428.588 390.26 427.676 389.816 426.836 389.264C426.02 388.712 425.36 387.992 424.856 387.104C424.352 386.192 424.1 385.064 424.1 383.72C424.1 382.16 424.532 380.744 425.396 379.472C426.284 378.176 427.592 377.144 429.32 376.376C431.072 375.608 433.244 375.224 435.836 375.224C437.54 375.224 439.22 375.404 440.876 375.764C442.532 376.124 444.02 376.676 445.34 377.42L442.784 383.576C441.536 382.952 440.324 382.484 439.148 382.172C437.996 381.86 436.868 381.704 435.764 381.704C434.948 381.704 434.3 381.776 433.82 381.92C433.34 382.064 432.992 382.256 432.776 382.496C432.584 382.736 432.488 383 432.488 383.288C432.488 383.72 432.74 384.068 433.244 384.332C433.748 384.572 434.408 384.776 435.224 384.944C436.064 385.112 436.976 385.292 437.96 385.484C438.968 385.676 439.964 385.94 440.948 386.276C441.932 386.612 442.832 387.056 443.648 387.608C444.488 388.16 445.16 388.88 445.664 389.768C446.168 390.656 446.42 391.76 446.42 393.08C446.42 394.616 445.976 396.032 445.088 397.328C444.224 398.6 442.928 399.632 441.2 400.424C439.472 401.192 437.3 401.576 434.684 401.576ZM456.724 385.16H467.956V391.28H456.724V385.16ZM457.3 394.592H469.9V401H448.948V375.8H469.432V382.208H457.3V394.592ZM473.171 401V375.8H485.303C487.655 375.8 489.683 376.184 491.387 376.952C493.115 377.72 494.447 378.824 495.383 380.264C496.319 381.68 496.787 383.36 496.787 385.304C496.787 387.248 496.319 388.928 495.383 390.344C494.447 391.736 493.115 392.804 491.387 393.548C489.683 394.292 487.655 394.664 485.303 394.664H477.887L481.667 391.172V401H473.171ZM488.255 401L482.063 391.82H491.063L497.327 401H488.255ZM481.667 392.108L477.887 388.256H484.763C485.939 388.256 486.803 387.992 487.355 387.464C487.931 386.936 488.219 386.216 488.219 385.304C488.219 384.392 487.931 383.672 487.355 383.144C486.803 382.616 485.939 382.352 484.763 382.352H477.887L481.667 378.5V392.108ZM507.915 401L497.259 375.8H506.403L515.079 397.076H509.643L518.571 375.8H526.923L516.267 401H507.915ZM535.545 385.16H546.777V391.28H535.545V385.16ZM536.121 394.592H548.721V401H527.769V375.8H548.253V382.208H536.121V394.592ZM551.991 401V375.8H564.123C566.475 375.8 568.503 376.184 570.207 376.952C571.935 377.72 573.267 378.824 574.203 380.264C575.139 381.68 575.607 383.36 575.607 385.304C575.607 387.248 575.139 388.928 574.203 390.344C573.267 391.736 571.935 392.804 570.207 393.548C568.503 394.292 566.475 394.664 564.123 394.664H556.707L560.487 391.172V401H551.991ZM567.075 401L560.883 391.82H569.883L576.147 401H567.075ZM560.487 392.108L556.707 388.256H563.583C564.759 388.256 565.623 387.992 566.175 387.464C566.751 386.936 567.039 386.216 567.039 385.304C567.039 384.392 566.751 383.672 566.175 383.144C565.623 382.616 564.759 382.352 563.583 382.352H556.707L560.487 378.5V392.108Z"
+              class="fill-text"
+            />
+            <rect
+              x="410"
+              y="547"
+              width="180"
+              height="300"
+              rx="10"
+              class="stroke-text-secondary stroke-5"
+            />
+            <circle cx="527" cy="567" r="5" class="fill-text-secondary" />
+            <rect
+              x="468"
+              y="562"
+              width="50"
+              height="10"
+              rx="5"
+              class="fill-text-secondary"
+            />
+            <rect
+              x="450"
+              y="672"
+              width="100"
+              height="50"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <path
+              d="M500 638L550 671.5L500 705L450 671.5L500 638Z"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <rect
+              x="77"
+              y="547"
+              width="180"
+              height="300"
+              rx="10"
+              class="stroke-text-secondary stroke-5"
+            />
+            <circle cx="194" cy="567" r="5" class="fill-text-secondary" />
+            <rect
+              x="135"
+              y="562"
+              width="50"
+              height="10"
+              rx="5"
+              class="fill-text-secondary"
+            />
+            <rect
+              x="117"
+              y="672"
+              width="100"
+              height="50"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <path
+              d="M167 638L217 671.5L167 705L117 671.5L167 638Z"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <rect
+              x="743"
+              y="547"
+              width="180"
+              height="300"
+              rx="10"
+              class="stroke-text-secondary stroke-5"
+            />
+            <circle cx="860" cy="567" r="5" class="fill-text-secondary" />
+            <rect
+              x="801"
+              y="562"
+              width="50"
+              height="10"
+              rx="5"
+              class="fill-text-secondary"
+            />
+            <rect
+              x="783"
+              y="672"
+              width="100"
+              height="50"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <path
+              d="M833 638L883 671.5L833 705L783 671.5L833 638Z"
+              class="fill-text-secondary stroke-background stroke-3"
+            />
+            <path
+              d="M560 459V482.299C560 487.822 564.477 492.299 570 492.299H823.899C829.461 492.299 833.954 496.838 833.898 502.4L833.499 542"
+              class="stroke-text-secondary stroke-5"
+            />
+            <path
+              d="M438 459V482.299C438 487.822 433.523 492.299 428 492.299H174.101C168.539 492.299 164.046 496.838 164.102 502.4L164.501 542"
+              class="stroke-text-secondary stroke-5"
+            />
+            <path d="M500 459V542" class="stroke-text-secondary stroke-5" />
+            <path d="M500 266V313" class="stroke-text-secondary stroke-5" />
+          </svg>
+        </div>
+      </section>
+      <section
+        id="features"
+        class="w-full min-h-dvh bg-background py-15 flex flex-col justify-start items-center"
+      >
+        <div class="element-to-animate mx-auto max-w-4xl text-center mb-10">
+          <h2 class="text-base/7 font-semibold text-primary">
+            Caractéristiques
+          </h2>
+          <p
+            class="mt-2 text-5xl font-bold tracking-tight text-balance text-text sm:text-6xl"
+          >
+            Boostez votre productivité. Commencez à utiliser notre application
+            dès aujourd'hui.
+          </p>
+        </div>
+        <div
+          class="flex-1 w-full h-full flex flex-col-reverse md:flex-row items-center"
+        >
+          <div
+            class="flex-1 p-5 md:p-10 h-full flex flex-col justify-center items-start"
+          >
+            <ul class="flex flex-col gap-5 w-full">
+              <li class="flex items-center gap-5">
+                <i class="fa-solid fa-lock text-primary text-xl"></i>
+                <p class="text-text-secondary font-semibold text-base">
+                  Chiffrement (End to End) pour garantir la sécurité de vos
+                  messages.
+                </p>
+              </li>
+              <li class="flex items-center gap-5">
+                <i class="fa-solid fa-list-check text-primary text-xl"></i>
+                <p class="text-text-secondary font-semibold text-base">
+                  Gagnez du temps et de l'énergie en envoyant des messages
+                  groupés à l'aide d'un fichier CSV ou Excel.
+                </p>
+              </li>
+              <li class="flex items-center gap-5">
+                <i class="fa-regular fa-clock text-primary text-xl"></i>
+                <p class="text-text-secondary font-semibold text-base">
+                  Programmez l'envoi de vos messages à une date et une heure
+                  précises.
+                </p>
+              </li>
+              <li class="flex items-center gap-5">
+                <i class="fa-solid fa-link text-primary text-xl"></i>
+                <p class="text-text-secondary font-semibold text-base">
+                  Envoyez vos messages via une requête API et facilitez leur
+                  intégration dans vos applications.
+                </p>
+              </li>
+              <li class="flex items-center gap-5">
+                <i class="fa-solid fa-circle-nodes text-primary text-xl"></i>
+                <p class="text-text-secondary font-semibold text-base">
+                  Créez un webhook qui envoie une requête POST à ​​votre serveur
+                  lors d'événements spécifiques (Envoi, Réception, Échec).
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class="flex-1 h-full flex items-center">
+            <img
+              src="../images/dashboard.png"
+              alt=""
+              class="w-full h-full object-contain overflow-hidden rounded-2xl"
+            />
+          </div>
+        </div>
+      </section>
+      <section
+        id="pricing"
+        class="bg-surface w-full min-h-dvh pt-15 flex flex-col justify-start items-center"
+      >
+        <div class="mx-auto max-w-4xl text-center">
+          <h2 class="text-base/7 font-semibold text-primary">Tarification</h2>
+          <p
+            class="mt-2 text-5xl font-bold tracking-tight text-balance text-text sm:text-6xl"
+          >
+            Choisissez le forfait qui vous convient
+          </p>
+        </div>
+        <p
+          class="mx-auto mt-6 px-5 max-w-2xl text-center text-lg font-medium text-pretty text-gray-400 sm:text-xl/8"
+        >
+          Choisissez un forfait abordable qui regorge des meilleures
+          fonctionnalités pour fidéliser votre public, créer une relation de
+          confiance avec vos clients et stimuler vos ventes.
+        </p>
+        <div class="pt-5 flex justify-center items-center gap-3">
+          <h1 class="text-text font-semibold text-lg">Mensuelle</h1>
+          <div
+            class="group w-12 h-6 bg-gray-400/10 rounded-full border border-text/20 p-1 cursor-pointer"
+          >
+            <div
+              id="pricing_toggle"
+              class="w-full h-full rounded-full relative"
+            >
+              <div
+                id="pricing_indicator"
+                class="w-4 h-4 bg-primary group-hover:bg-primary-hover rounded-full absolute top-1/2 left-0 -translate-y-1/2 transition duration-300"
+              ></div>
+            </div>
+          </div>
+          <h1 class="text-text font-semibold text-lg">Annuelle</h1>
+        </div>
+        <div class="h-[1600px] md:h-[500px] mt-10 mb-20 w-full relative">
+          <div
+            id="pricing_content"
+            class="absolute h-full w-[200vw] top-0 left-0 flex transition duration-300"
+          >
+            <div
+              class="h-full w-1/2 p-5 md:p-0 flex justify-center items-center gap-10 flex-wrap"
+            >
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Gratuit</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >0 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    50 SMS
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Pro</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >1 000 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/ mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    1 000 SMS
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Enterprise</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >5 000 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/ mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    5 000 SMS
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+            </div>
+            <div
+              class="w-1/2 h-full p-5 md:p-0 flex justify-center items-center gap-10 flex-wrap"
+            >
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Gratuit</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >0 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    50 SMS
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Pro</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >10 000 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    1 000 SMS / mois
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+              <div
+                class="w-full h-[500px] md:h-full md:w-1/4 p-5 flex flex-col justify-start items-start border-2 hover:border-primary border-text-secondary/20 shadow-sm rounded-2xl"
+              >
+                <h1 class="text-primary font-semibold text-lg">Enterprise</h1>
+                <p class="my-4 flex items-baseline gap-x-2">
+                  <span class="text-5xl font-semibold tracking-tight text-text"
+                    >50 000 DA</span
+                  >
+                  <span class="text-base text-text-secondary">/mois</span>
+                </p>
+                <p class="my-6 text-base/7 text-text font-medium">
+                  Le forfait idéal pour commencer avec notre produit.
+                </p>
+                <ul
+                  role="list"
+                  class="mt-auto mb-5 space-y-3 text-sm/6 text-text"
+                >
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    5 000 SMS / mois
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS en masse
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Envoi de SMS programmé
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès API
+                  </li>
+                  <li class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    Accès Webhooks
+                  </li>
+                </ul>
+                <a
+                  href="login/?redirect=/dashboard"
+                  class="w-full text-center text-white font-bold bg-primary hover:bg-primary-hover px-10 py-2 rounded transition duration-300"
+                  >Commencer</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="bg-background w-full min-h-dvh relative px-6 p-15 lg:px-8 flex flex-col justify-start items-center"
+      >
+        <div class="mx-auto max-w-4xl text-center">
+          <h2 class="text-base/7 font-semibold text-green-500">FAQ</h2>
+          <p
+            class="mt-2 text-5xl font-semibold tracking-tight text-balance text-text sm:text-6xl"
+          >
+            Foire aux questions
+          </p>
+          <p
+            class="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty text-text-secondary sm:text-xl/8"
+          >
+            Trouvez les réponses aux questions les plus fréquentes sur notre
+            plateforme,ou n'hésitez pas à
+            <a href="contact.html" class="text-text hover:text-primary"
+              >nous contacter</a
+            >.
+          </p>
+        </div>
+        <div
+          class="bg-surface-secondary w-full md:w-2/3 my-12 p-5 rounded-xl flex flex-col border border-white/10"
+        >
+          <div class="faq-item border-b border-text-secondary/20 pb-3">
+            <div class="flex justify-between items-center py-3 cursor-pointer">
+              <p class="text-text font-semibold text-lg">
+                How many users can I invite to my workspace?
+              </p>
+              <i class="fa-solid fa-angle-down text-text"></i>
+            </div>
+            <p
+              class="text-text-secondary font-medium text-base max-h-0 transition-all duration-300 overflow-hidden"
+            >
+              Choose an affordable plan that’s packed with the best features for
+              engaging your audience, creating customer loyalty, and driving
+              sales.
+            </p>
+          </div>
+          <div class="faq-item border-b border-gray-700 pb-3">
+            <div class="flex justify-between items-center py-3 cursor-pointer">
+              <p class="text-white font-semibold text-lg">
+                How many users can I invite to my workspace?
+              </p>
+              <span class="material-symbols-outlined text-white">
+                keyboard_arrow_down
+              </span>
+            </div>
+            <p
+              class="text-gray-400 font-medium text-base max-h-0 transition-all duration-300 overflow-hidden"
+            >
+              Choose an affordable plan that’s packed with the best features for
+              engaging your audience, creating customer loyalty, and driving
+              sales.
+            </p>
+          </div>
+          <div class="faq-item border-b border-gray-700 pb-3">
+            <div class="flex justify-between items-center py-3 cursor-pointer">
+              <p class="text-white font-semibold text-lg">
+                How many users can I invite to my workspace?
+              </p>
+              <span class="material-symbols-outlined text-white">
+                keyboard_arrow_down
+              </span>
+            </div>
+            <p
+              class="text-gray-400 font-medium text-base max-h-0 transition-all duration-300 overflow-hidden"
+            >
+              Choose an affordable plan that’s packed with the best features for
+              engaging your audience, creating customer loyalty, and driving
+              sales.
+            </p>
+          </div>
+          <div class="faq-item pb-3">
+            <div class="flex justify-between items-center py-3 cursor-pointer">
+              <p class="text-white font-semibold text-lg">
+                How many users can I invite to my workspace?
+              </p>
+              <span class="material-symbols-outlined text-white">
+                keyboard_arrow_down
+              </span>
+            </div>
+            <p
+              class="text-gray-400 font-medium text-base max-h-0 transition-all duration-300 overflow-hidden"
+            >
+              Choose an affordable plan that’s packed with the best features for
+              engaging your audience, creating customer loyalty, and driving
+              sales.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="w-full bg-[#0f0f0f] flex flex-col justify-start gap-10 p-10">
+      <div class="flex-1 flex flex-col md:flex-row items-start gap-10">
+        <div class="flex items-center gap-2">
+          <img src="../images/smsdarts.png" alt="logo" class="w-8 h-auto" />
+          <h1 class="text-white font-black text-xl">
+            SMS<span class="text-primary">Darts</span>
+          </h1>
+        </div>
+        <div class="flex-1 flex flex-col md:flex-row justify-around">
+          <div>
+            <h1 class="text-white font-semibold text-xl mb-3">Ressources</h1>
+            <ul class="flex flex-col gap-2">
+              <li><a href="#" class="text-text-secondary">Docs</a></li>
+              <li><a href="#" class="text-text-secondary">API</a></li>
+              <li><a href="#" class="text-text-secondary">Tarification</a></li>
+            </ul>
+          </div>
+          <div>
+            <h1 class="text-white font-semibold text-xl mb-3">À propos</h1>
+            <ul class="flex flex-col gap-2">
+              <li>
+                <a href="#" class="text-text-secondary">À propos de nous</a>
+              </li>
+              <li>
+                <a href="#" class="text-text-secondary">Contactez-nous</a>
+              </li>
+              <li>
+                <a href="#" class="text-text-secondary">Signaler un bug</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h1 class="text-white font-semibold text-xl mb-3">Légal</h1>
+            <ul class="flex flex-col gap-2">
+              <li>
+                <a href="#" class="text-text-secondary"
+                  >Politique de confidentialité</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-text-secondary"
+                  >Conditions d'utilisation</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="text-white text-center">Tous droits réservés - SMSDarts ©</p>
+      </div>
+    </footer>
+    <script src="./app.js"></script>
+    <script src="./languages.js" defer></script>
+  </body>
+</html>
