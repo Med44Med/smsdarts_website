@@ -22,6 +22,24 @@ const generateKeys = async () => {
     ["encrypt", "decrypt"],
   );
 
+  const exportedPublicKey = await window.crypto.subtle.exportKey(
+    "spki",
+    keyPair.publicKey,
+  );
+  const public_key = btoa(
+    String.fromCharCode(...new Uint8Array(exportedPublicKey)),
+  );
+
+  const exportedPrivateKey = await window.crypto.subtle.exportKey(
+    "pkcs8",
+    keyPair.privateKey,
+  );
+  const secret_key = btoa(
+    String.fromCharCode(...new Uint8Array(exportedPrivateKey)),
+  );
+
+  console.log(keyPair);
+
   const request = initiateDB();
   request.onsuccess = function (event) {
     const db = event.target.result;
@@ -29,15 +47,13 @@ const generateKeys = async () => {
     const objectStore = transaction.objectStore("keys");
     const data = {
       id: crypto.randomUUID(),
-      public_key: keyPair.publicKey,
-      secret_key: keyPair.secretKey,
+      public_key,
+      secret_key,
     };
     const putRequest = objectStore.put(data);
     putRequest.onsuccess = function () {
       console.log("Keys stored successfully in IndexedDB.");
-    }
+    };
   };
   return keyPair;
 };
-
-

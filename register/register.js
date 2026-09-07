@@ -9,7 +9,8 @@ let loading = false;
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
+  console.log("here");
+  
   const formData = new FormData(form);
   const username = formData.get("username");
   const email = formData.get("email");
